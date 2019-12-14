@@ -1,0 +1,78 @@
+version: '3.3'
+
+services:
+
+
+#  s_git:
+#    container_name: s_git
+#    build:
+#      context: ./docker.config/git
+#    volumes:
+#      - ./:/var/www/
+#    working_dir: /var/www/
+#    links:
+#        - s_fpm
+#    ports:
+#      - 8181:80
+    #command: git clone https://github.com/laravel/laravel.git ./
+
+  s_nginx:
+    container_name: s_nginx
+    build:
+        context: ./docker.config/nginx
+#    image: nginx
+    volumes:
+      - ./docker.config/nginx/nginx.conf:/etc/nginx/conf.d/defaulf.conf
+    working_dir: ${APP_PATH_CONTAINER}
+    ports:
+      - 8183:80
+    links:
+    - fpm
+#    - s_composer
+
+  fpm:
+    container_name: fpm
+    build:
+      context: ./docker.config/fpm
+    volumes:
+      - ./:${APP_PATH_CONTAINER}
+    working_dir: ${APP_PATH_CONTAINER}
+    links:
+      - mysql_5_7
+#      - s_git
+
+
+
+  mysql_5_7:
+    container_name: mysql_5_7
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: '${CONTAINER_DEFAULT_DB_ROOT_PASS}'
+      MYSQL_DATABASE: laravel
+      TZ: Europe/Kiev
+    ports:
+      - 33061:${CONTAINER_MYSQL_DEFAULT_PORT}
+    volumes:
+      - ./mysql5_7:${DB_PATH_CONTAINER}:rw
+
+  s_phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      - PMA_HOSTS=${APP_LOCAL_HOST}:33061
+      - PMA_VERBOSES=mysql_5_7(${APP_LOCAL_HOST}:33061))
+    restart: always
+    ports:
+      - ${CONTAINER_PHP_NY_ADMIN_PORT}:${CONTAINER_APACHE_DEFAULT_PORT}
+    volumes:
+      - /sessions
+
+  s_composer:
+    image: composer:1.8.5
+    working_dir: ${APP_PATH_CONTAINER}
+    command: composer install
+
+volumes:
+  mysql5_7:
+  sessions:
