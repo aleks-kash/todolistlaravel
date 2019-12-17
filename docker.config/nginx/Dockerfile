@@ -1,5 +1,8 @@
 FROM nginx
 
-#ADD /var/www/html/docker.config/nginx/nginx.conf /etc/nginx/conf.d/defaulf.conf
+RUN apt-get update
 
-#WORKDIR /var/www/html
+RUN apt-get install -y \
+    nano \
+    joe
+

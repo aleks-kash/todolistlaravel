@@ -2,20 +2,6 @@ version: '3.3'
 
 services:
 
-
-#  s_git:
-#    container_name: s_git
-#    build:
-#      context: ./docker.config/git
-#    volumes:
-#      - ./:/var/www/
-#    working_dir: /var/www/
-#    links:
-#        - s_fpm
-#    ports:
-#      - 8181:80
-    #command: git clone https://github.com/laravel/laravel.git ./
-
   s_nginx:
     container_name: s_nginx
     build:
@@ -23,6 +9,7 @@ services:
 #    image: nginx
     volumes:
       - ./docker.config/nginx/nginx.conf:/etc/nginx/conf.d/defaulf.conf
+      - ./public/:${APP_PATH_CONTAINER}public/
     working_dir: ${APP_PATH_CONTAINER}
     ports:
       - 8183:80
@@ -34,9 +21,14 @@ services:
     container_name: fpm
     build:
       context: ./docker.config/fpm
+#      context: ./docker.config/lorisleiva
     volumes:
       - ./:${APP_PATH_CONTAINER}
     working_dir: ${APP_PATH_CONTAINER}
+#    command:
+#      - source ~/.profile
+#      - nvm install node
+#      - nvm install 8.10.0
     links:
       - mysql_5_7
 #      - s_git
@@ -68,10 +60,10 @@ services:
     volumes:
       - /sessions
 
-  s_composer:
-    image: composer:1.8.5
-    working_dir: ${APP_PATH_CONTAINER}
-    command: composer install
+#  s_composer:
+#    image: composer:1.8.5
+#    working_dir: ${APP_PATH_CONTAINER}
+#    command: composer install
 
 volumes:
   mysql5_7:
