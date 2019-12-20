@@ -1,4 +1,4 @@
-FROM php:7.1-fpm
+FROM php:7.2-fpm
 
 RUN apt-get update \
         && docker-php-ext-install pdo_mysql
@@ -20,5 +20,5 @@ RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/
 #RUN apt-get install -y nodejs npm
 
 #Install NVM Script
-RUN curl -sSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | sh
+#RUN curl -sSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | sh
 #RUN nvm install 8.10.0

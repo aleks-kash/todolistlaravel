@@ -14,8 +14,7 @@ services:
     ports:
       - 8183:80
     links:
-    - fpm
-#    - s_composer
+      - fpm
 
   fpm:
     container_name: fpm
@@ -31,7 +30,6 @@ services:
 #      - nvm install 8.10.0
     links:
       - mysql_5_7
-#      - s_git
 
 
 
@@ -60,9 +58,16 @@ services:
     volumes:
       - /sessions
 
-#  s_composer:
+  s_composer:
+    container_name: s_composer
+    build:
+      context: ./docker.config/composer
 #    image: composer:1.8.5
+    volumes:
+      - ./:${APP_PATH_CONTAINER}
 #    working_dir: ${APP_PATH_CONTAINER}
+#    links:
+#      - fpm
 #    command: composer install
 
 volumes:
