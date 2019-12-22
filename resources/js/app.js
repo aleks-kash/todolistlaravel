@@ -30,3 +30,13 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 const app = new Vue({
     el: '#app',
 });
+
+import 'jquery-ui/ui/widgets/datepicker.js';
+import 'jquery-ui/ui/widgets/sortable.js';
+
+import $ from 'jquery';
+
+global.jQuery = $;
+global.$ = $;
+
+console.log($('<p></p>'));

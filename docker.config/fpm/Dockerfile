@@ -20,5 +20,5 @@ RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/
 #RUN apt-get install -y nodejs npm
 
 #Install NVM Script
-#RUN curl -sSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | sh
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
 #RUN nvm install 8.10.0
