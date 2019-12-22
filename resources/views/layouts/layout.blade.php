@@ -4,10 +4,15 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
-	<title>Laravel</title>
+	<title>@yield('title')</title>
 	
 	<!-- Fonts -->
 	<link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+@if (config('app.env') == 'local')
+	<link rel="stylesheet" href="{{asset('css/app.css')}}">
+@else
+	<link rel="stylesheet" href="{{asset(mix('css/app.css'), true)}}">
+@endif
 	
 	<!-- Styles -->
 	<style>
@@ -64,8 +69,19 @@
 	</style>
 </head>
 <body>
-
-	@yield('content')
-
+	<div class="container">
+		
+		@yield('content')
+		
+	</div>
+	
+	<!-- Scripts -->
+	@if (config('app.env') == 'local')
+		<script src="{{asset('js/app.js')}}"></script>
+	@else
+		<script src="{{asset(mix('js/app.js'), true)}}"></script>
+	@endif
+	
+	@stack('scripts')
 </body>
 </html>
