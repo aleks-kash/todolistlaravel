@@ -19,11 +19,37 @@ class TasksController extends Controller
      *
      * @return Renderable
      */
-    public function index()
+    public function index(Request $request, Task $task): Renderable
     {
-        $tasks = Task::all();
+        $taskQuery = $task->newQuery();
+        if ($priority = $request->get('priority')){
+            $taskQuery->byPriority($priority);
+            $task->priority = $priority;
+        }
+
+        if ($status = $request->get('status')){
+            $taskQuery->byStatus($status);
+            $task->status = $status;
+        }
+
+        if ($person = $request->get('person')){
+            $taskQuery->byPerson($person);
+            $task->person = $person;
+        }
+
+        $tasks = $taskQuery->orderBy('created_at')->paginate(2);
+//dd($request->old('status'));
+        if ($request->isMethod('post')) {
+            dd($_POST);
+            $request->get('priority');
+            $request->get('status');
+            $request->get('person');
+            $tasks->appends(['sort' => 'votes']);
+        }
+
         return View::make('tasks.index')
-            ->with('tasks', $tasks);
+            ->with('tasks', $tasks)
+            ->with('task', $task);
     }
 
     /**
@@ -31,7 +57,7 @@ class TasksController extends Controller
      *
      * @return Renderable
      */
-    public function create()
+    public function create(): Renderable
     {
         return View::make('tasks.create');
     }
@@ -80,7 +106,7 @@ class TasksController extends Controller
      * @param  int  $id
      * @return Renderable
      */
-    public function show($id)
+    public function show($id): Renderable
     {
         $task = Task::find($id);
 
@@ -94,7 +120,7 @@ class TasksController extends Controller
      * @param  int  $id
      * @return Renderable
      */
-    public function edit($id)
+    public function edit($id): Renderable
     {
         // get the nerd
         $task = Task::find($id);
@@ -150,10 +176,26 @@ class TasksController extends Controller
      * @param  int  $id
      * @return RedirectResponse
      */
-    public function destroy($id)
+    public function destroy($id): RedirectResponse
     {
         Task::find($id)->delete();
         Session::flash('message', 'Successfully deleted the task!');
+        return Redirect::to('tasks');
+    }
+
+    /**
+     * @param string|null $priority
+     * @param string|null $person
+     * @param string|null $status
+     * @return RedirectResponse
+     */
+    public function search(string $priority = null, string $person = null, string $status = null): RedirectResponse
+    {
+        dd([
+            $priority,
+            $person,
+            $status
+        ]);
         return Redirect::to('tasks');
     }
 }

@@ -38,5 +38,3 @@ import $ from 'jquery';
 
 global.jQuery = $;
 global.$ = $;
-
-console.log($('<p></p>'));

@@ -22,10 +22,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/tasks/search/{priority?}/{status?}/{person?}', 'TasksController@search');
+
 Route::resource('tasks', 'TasksController');
 
-//Route::get('/tasks', 'TasksController@index');
-//Route::get('/tasks/{task}', 'TasksController@show');
+
+//Route::get('/tasks/seache', 'TasksController@show');
 
 //Route::get('/tasks', function () {
 ////    $tasks = DB::table('tasks')->get();
