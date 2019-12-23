@@ -5,28 +5,110 @@
 @endsection
 
 @section('content')
-
-	{{--<div class="flex-center position-ref full-height">--}}
-		{{--<ul>--}}
-{{--@foreach($tasks ?? array() as $task)--}}
-			{{--<li>{{ $task->body }}</li>--}}
-{{--@endforeach--}}
-		{{--</ul>--}}
-	{{--</div>--}}
-	
 	
 	@push('scripts')
 		<script type="text/javascript">
             $(function() {
 
-                $('#sortContainer').sortable();
+                $('.sortContainer').sortable({
+                    placeholder: 'ui-sortable-placeholder',
+	                // group: 'sortContainer',
+	                // pullPlaceholder: false,
+	                // onDrop: function () {
+                    //     console.log('onDrop');
+                    //     // var $clonedItem = $('<div/>').css({height: 0});
+                    //     // item.before($clonedItem);
+                    //     // $clonedItem.animate({'height': $item.height()});
+					// 	//
+	                //     // $item.animate($clonedItem.position(), function () {
+		            //     //     $clonedItem.detach();
+		            //     //     _super(item, conteiner);
+                    //     // });
+	                // },
+	                //
+	                // onDragStart: function () {
+                    //     console.log('onDragStart');
+                    // },
+	                //
+                    // onDrag: function () {
+                    //     console.log('onDrag');
+                    // },
+	                // onDragStart: function ($item, container, _super, event) {
+		            //     console.log('ghdfhgfhfgh')
+                    // }
+
+                    // appendTo: "parent",
+                    // axis: false,
+                    // connectWith: false,
+                    // containment: false,
+                    // cursor: "auto",
+                    // cursorAt: false,
+                    // dropOnEmpty: true,
+                    // forcePlaceholderSize: false,
+                    // forceHelperSize: false,
+                    // grid: false,
+                    // handle: false,
+                    // helper: "original",
+                    // items: "> *",
+                    // opacity: false,
+                    
+                    // revert: false,
+                    // scroll: true,
+                    // scrollSensitivity: 20,
+                    // scrollSpeed: 20,
+                    // scope: "default",
+                    // tolerance: "intersect",
+                    // zIndex: 1000,
+	                
+
+                    // activate: function () {
+	                //     console.log('--- activate');
+                    // },
+                    // beforeStop: function () {
+                    //     console.log('--- beforeStop');
+                    // },
+                    // change: function () {
+                    //     console.log('--- change');
+                    // },
+                    // deactivate: function () {
+                    //     console.log('--- deactivate');
+                    // },
+                    // out: function () {
+                    //     console.log('--- out');
+                    // },
+                    // over: function () {
+                    //     console.log('--- over');
+                    // },
+                    // receive: function () {
+                    //     console.log('--- receive');
+                    // },
+                    // remove: function () {
+                    //     console.log('--- remove');
+                    // },
+                    // sort: function () {
+                    //     console.log('--- sort');
+                    // },
+                    // start: function () {
+                    //     console.log('--- start');
+                    // },
+                    // stop: function () {
+                    //     console.log('--- stop');
+                    // },
+                    update: function ($item, container, _super, event) {
+                        console.log('--- update');
+                        console.log('item', $item);
+                        console.log('container', container);
+                        console.log('_super', _super);
+                        console.log('event', event);
+                    }
+                });
 
             });
 		</script>
 	@endpush
 	
 	<style>
-		.row_table{
+		.row_table {
 			color: black;
 			font-size: 1.2em;
 			border: 5px solid rgba(154, 151, 151, 0.34);
@@ -35,135 +117,80 @@
 			text-align: center;
 		}
 		
-		.row_table:nth-of-type(1){
+		.row_table:nth-of-type(1) {
 			border-bottom: 2.5px solid rgba(154, 151, 151, 0.34);
 		}
 		
 		.row_table:nth-of-type(2){
 			border-top: 2.5px solid rgba(154, 151, 151, 0.34);
+			background: #eee;
 		}
 		
-		.f_btn_action{
+		.f_btn_action {
 			 float: left;
 			 margin-right: 3px;
 		}
 		
-		.f_btn_action_block{
+		.f_btn_action_block {
 			position: relative;
 			padding-top: 15px;
 			margin-left: -90px;
 			left: 50%;
-			
 		}
 		
-		form.f_btn_action{
+		form.f_btn_action {
 			margin-left: 10px;
 		}
 		
-		.nav_paginator{
-			/* display: block; */
-			/* margin-left: auto; */
-			/* margin-right: auto; */
+		.nav_paginator {
 			position: relative;
-			/* width: 0; */
-			/* margin: 30px 0 0 -8%; */
-			/* left: 50%; */
-			/* margin-right: -50%; */
-			/* left: 50%; */
-			/* margin-right: -50%; */
-			/* transform: translate(45%, 74%); */
-			/* position: fixed; */
 			top: 30px;
-			/* left: 0; */
 			display: flex;
-			/* align-items: center; */
-			/* align-content: center; */
 			justify-content: center;
 		}
+		
+		.ui-sortable-handle.ui-sortable-helper, .ui-sortable-handle.ui-sortable-helper * {
+			cursor: move !important;
+		}
+		
+		.ui-sortable-handle.ui-sortable-helper {
+			position: absolute;
+			opacity: 0.5;
+			z-index: 2000;
+		}
+		
+		.ui-sortable-handle {
+			position: relative;
+			
+		}
+		
+		.ui-sortable-handle:before {
+			position: absolute;
+		}
+		
+		.sortContainer.row_table .row{
+			background: rgb(238, 238, 238);
+			border-radius: 10px;
+		}
+		
+		.sortContainer.row_table .row.ui-sortable-handle.ui-sortable-helper{
+			background: rgb(112, 112, 112);
+		}
+		
+		.ui-sortable-placeholder {
+			border: 3px dashed #aaa;
+			height: 102px;
+			width: cals(100% - 12px);
+			background: #ccc;
+		}
+		
 	</style>
-	
 	
 	<h1>All Tasks</h1>
 	
-	<!-- will be used to show any messages -->
 	@if (Session::has('message'))
 		<div class="alert alert-info">{{ Session::get('message') }}</div>
 	@endif
-	
-	{{--<table class="table table-striped table-bordered">--}}
-		{{--<thead>--}}
-			{{--<tr>--}}
-				{{--<th scope="col">priority</th>--}}
-				{{--<th scope="col">title</th>--}}
-				{{--<th scope="col">body</th>--}}
-				{{--<th scope="col">status</th>--}}
-				{{--<th scope="col">responsible person</th>--}}
-				{{--<th scope="col">updated_at</th>--}}
-				{{--<th scope="col">actions</th>--}}
-			{{--</tr>--}}
-		{{--</thead>--}}
-		{{--<tbody>--}}
-		{{----}}
-		{{--@foreach($tasks as $key => $task)--}}
-			{{--@dd($task->updated_at)--}}
-			{{--<tr>--}}
-				{{--<td>{{ $task->priority }}</td>--}}
-				{{--<td>{{ $task->title }}</td>--}}
-				{{--<td>{{ $task->body }}</td>--}}
-				{{--<td>{{ $task->status_id }}</td>--}}
-				{{--<td>{{ $task->responsible_person_id}}</td>--}}
-				{{--<td>{{ $task->updated_at }}</td>--}}
-				{{----}}
-				{{----}}
-		{{--// status_id,--}}
-        {{--$table->text('status_id');--}}
-        {{--// responsible_person_id--}}
-        {{--$table->text('responsible_person_id');--}}
-        {{--// title,--}}
-        {{--$table->text('title');--}}
-        {{--//--}}
-        {{--//--}}
-        {{--//--}}
-        {{--$table->text('body');// body,--}}
-        {{--//--}}
-        {{--//--}}
-        {{--//--}}
-
-        {{--// priority,--}}
-        {{--$table->text('priority');--}}
-        {{--// updated_at--}}
-{{--//            $table->text('updated_at');--}}
-{{----}}
-				{{----}}
-				{{--<!-- we will also add show, edit, and delete buttons -->--}}
-				{{--<td>--}}
-					{{----}}
-					{{--<!-- delete the nerd (uses the destroy method DESTROY /nerds/{id} -->--}}
-					{{--<!-- we will add this later since its a little more complicated than the other two buttons -->--}}
-					{{--{{ Form::open(array('url' => 'tasks/' . $task->id,--}}
-						{{--'class' => 'pull-right',--}}
-						{{--'onsubmit' => 'return confirm("Are You Sure to delete this Task?");'--}}
-					{{--)) }}--}}
-						{{--{{ Form::hidden('_method', 'DELETE') }}--}}
-						{{--{{ Form::submit('Delete', array('class' => 'btn btn-danger')) }}--}}
-					{{--{{ Form::close() }}--}}
-					{{----}}
-					{{--<!-- show the nerd (uses the show method found at GET /nerds/{id} -->--}}
-					{{--<a class="btn btn-small btn-success" href="{{ URL::to('tasks/' . $task->id) }}">Show</a>--}}
-					{{----}}
-					{{--<!-- edit this nerd (uses the edit method found at GET /nerds/{id}/edit -->--}}
-					{{--<a class="btn btn-small btn-info" href="{{ URL::to('tasks/' . $task->id . '/edit') }}">Edit</a>--}}
-					{{----}}
-					{{--<!-- delete the nerd (uses the destroy method DESTROY /nerds/{id} -->--}}
-					{{--<!-- we will add this later since its a little more complicated than the other two buttons -->--}}
-					{{--<a class="btn btn-small btn-danger" href="$">DELETE</a>--}}
-				{{----}}
-				{{--</td>--}}
-			{{--</tr>--}}
-		{{--@endforeach--}}
-		{{--</tbody>--}}
-	{{--</table>--}}
-	
 	
 	<div class="row_table">
 			{{ Form::model($task, array(
@@ -171,8 +198,7 @@
 				'class'     => 'pull-right',
 				'method'    => 'GET'
 			)) }}
-{{--			{{ Form::hidden('_method', 'PUT') }}--}}
-{{--		{{ method_field('PUT') }}--}}
+
 			<div class="row align-items-center">
 				<div class="col-sm-1"></div>
 				<div class="col-sm-1">{{ Form::text('priority', Request::old('priority'), array('class' => 'form-control')) }}</div>
@@ -198,7 +224,7 @@
 			<div class="col-sm-3">actions</div>
 		</div>
 	</div>
-	<div id="sortContainer" class="row_table">
+	<div class="sortContainer row_table">
 		@foreach($tasks as $key => $task)
 			<div class="row align-items-center">
 				<div class="col-sm-1">{{ ++$loop->index }}</div>
@@ -229,35 +255,5 @@
 	<div class="nav_paginator">
 		{{ $tasks->render() }}
 	</div>
-	
-	
-{{--	{!! $tasks->links() !!}--}}
-	
-	{{--<div id="DeleteModal" class="modal fade text-danger" role="dialog">--}}
-		{{--<div class="modal-dialog ">--}}
-			{{--<!-- Modal content-->--}}
-			{{--{{ Form::open(array('url' => 'tasks/' . $task->id, 'class' => 'pull-right')) }}--}}
-				{{--<div class="modal-content">--}}
-					{{--<div class="modal-header bg-danger">--}}
-						{{--<button type="button" class="close" data-dismiss="modal">&times;</button>--}}
-						{{--<h4 class="modal-title text-center">DELETE CONFIRMATION</h4>--}}
-					{{--</div>--}}
-					{{--<div class="modal-body">--}}
-{{--						{{ csrf_field() }}--}}
-						{{--{{ method_field('DELETE') }}--}}
-						{{--<p class="text-center">Are You Sure Want To Delete ?</p>--}}
-					{{--</div>--}}
-					{{--<div class="modal-footer">--}}
-						{{--<center>--}}
-							{{--<button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>--}}
-							{{--<button type="submit" name="" class="btn btn-danger" data-dismiss="modal" onclick="formSubmit()">Yes, Delete</button>--}}
-						{{--</center>--}}
-					{{--</div>--}}
-				{{--</div>--}}
-			{{--{{ Form::close() }}--}}
-		{{--</div>--}}
-	{{--</div>--}}
-	
-	
 
 @endsection
