@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\{
     DB,
     Auth,
     Route,
+    Request,
+    Response,
 };
 
 Route::get('/', function () {
@@ -29,11 +31,12 @@ Route::resource('tasks', 'TasksController');
 
 //Route::get('/tasks/seache', 'TasksController@show');
 
-//Route::get('/tasks', function () {
-////    $tasks = DB::table('tasks')->get();
-//    $tasks = Task::all();
-//    return view('tasks.index', compact('tasks'));
-//});
+Route::post('/ajax/search', function () {
+    return Response::json(Request::all());
+})
+    ->middleware('verified', 'only.ajax')
+//    ->middleware('only.ajax')
+;
 //
 //Route::get('/tasks/{task}', function ($id) {
 ////    $task = DB::table('tasks')->find($id);

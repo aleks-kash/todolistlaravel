@@ -8,100 +8,119 @@
 	
 	@push('scripts')
 		<script type="text/javascript">
-            $(function() {
 
-                $('.sortContainer').sortable({
-                    placeholder: 'ui-sortable-placeholder',
-	                // group: 'sortContainer',
-	                // pullPlaceholder: false,
-	                // onDrop: function () {
-                    //     console.log('onDrop');
-                    //     // var $clonedItem = $('<div/>').css({height: 0});
-                    //     // item.before($clonedItem);
-                    //     // $clonedItem.animate({'height': $item.height()});
-					// 	//
-	                //     // $item.animate($clonedItem.position(), function () {
-		            //     //     $clonedItem.detach();
-		            //     //     _super(item, conteiner);
-                    //     // });
-	                // },
-	                //
-	                // onDragStart: function () {
-                    //     console.log('onDragStart');
-                    // },
-	                //
-                    // onDrag: function () {
-                    //     console.log('onDrag');
-                    // },
-	                // onDragStart: function ($item, container, _super, event) {
-		            //     console.log('ghdfhgfhfgh')
-                    // }
+            document.addEventListener('DOMContentLoaded', function(){ // Аналог $(document).ready(function(){
+                                                                      // Если должен быть найден один элемент
+                $(function() {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
 
-                    // appendTo: "parent",
-                    // axis: false,
-                    // connectWith: false,
-                    // containment: false,
-                    // cursor: "auto",
-                    // cursorAt: false,
-                    // dropOnEmpty: true,
-                    // forcePlaceholderSize: false,
-                    // forceHelperSize: false,
-                    // grid: false,
-                    // handle: false,
-                    // helper: "original",
-                    // items: "> *",
-                    // opacity: false,
-                    
-                    // revert: false,
-                    // scroll: true,
-                    // scrollSensitivity: 20,
-                    // scrollSpeed: 20,
-                    // scope: "default",
-                    // tolerance: "intersect",
-                    // zIndex: 1000,
-	                
+                    $('.sortContainer').sortable({
+                        placeholder: 'ui-sortable-placeholder',
+                        revert: true,
+                        scroll: false,
+                        opacity: true,
+                        handle: 'i.icon-move',
+                        // group: 'sortContainer',
+                        // pullPlaceholder: false,
+                        // onDrop: function () {
+                        //     console.log('onDrop');
+                        //     // var $clonedItem = $('<div/>').css({height: 0});
+                        //     // item.before($clonedItem);
+                        //     // $clonedItem.animate({'height': $item.height()});
+                        // 	//
+                        //     // $item.animate($clonedItem.position(), function () {
+                        //     //     $clonedItem.detach();
+                        //     //     _super(item, conteiner);
+                        //     // });
+                        // },
+                        //
+                        // onDragStart: function () {
+                        //     console.log('onDragStart');
+                        // },
+                        //
+                        // onDrag: function () {
+                        //     console.log('onDrag');
+                        // },
+                        // onDragStart: function ($item, container, _super, event) {
+                        //     console.log('ghdfhgfhfgh')
+                        // }
 
-                    // activate: function () {
-	                //     console.log('--- activate');
-                    // },
-                    // beforeStop: function () {
-                    //     console.log('--- beforeStop');
-                    // },
-                    // change: function () {
-                    //     console.log('--- change');
-                    // },
-                    // deactivate: function () {
-                    //     console.log('--- deactivate');
-                    // },
-                    // out: function () {
-                    //     console.log('--- out');
-                    // },
-                    // over: function () {
-                    //     console.log('--- over');
-                    // },
-                    // receive: function () {
-                    //     console.log('--- receive');
-                    // },
-                    // remove: function () {
-                    //     console.log('--- remove');
-                    // },
-                    // sort: function () {
-                    //     console.log('--- sort');
-                    // },
-                    // start: function () {
-                    //     console.log('--- start');
-                    // },
-                    // stop: function () {
-                    //     console.log('--- stop');
-                    // },
-                    update: function ($item, container, _super, event) {
-                        console.log('--- update');
-                        console.log('item', $item);
-                        console.log('container', container);
-                        console.log('_super', _super);
-                        console.log('event', event);
-                    }
-                });
+                        // appendTo: "parent",
+                        // axis: false,
+                        // connectWith: false,
+                        // containment: false,
+                        // cursor: "auto",
+
+                        // cursorAt: false,
+                        // dropOnEmpty: true,
+                        // forcePlaceholderSize: false,
+                        // forceHelperSize: false,
+                        // grid: false,
+
+                        // helper: "original",
+                        // items: "> *",
+
+
+
+
+                        // scrollSensitivity: 20,
+                        // scrollSpeed: 20,
+                        // scope: "default",
+                        // tolerance: "intersect",
+                        // zIndex: 1000,
+
+
+                        // activate: function () {
+                        //     console.log('--- activate');
+                        // },
+                        // beforeStop: function () {
+                        //     console.log('--- beforeStop');
+                        // },
+                        // change: function () {
+                        //     console.log('--- change');
+                        // },
+                        // deactivate: function () {
+                        //     console.log('--- deactivate');
+                        // },
+                        // out: function () {
+                        //     console.log('--- out');
+                        // },
+                        // over: function () {
+                        //     console.log('--- over');
+                        // },
+                        // receive: function () {
+                        //     console.log('--- receive');
+                        // },
+                        // remove: function () {
+                        //     console.log('--- remove');
+                        // },
+                        // sort: function () {
+                        //     console.log('--- sort');
+                        // },
+                        // start: function () {
+                        //     console.log('--- start');
+                        // },
+                        // stop: function () {
+                        //     console.log('--- stop');
+                        // },
+                        update: function ($item, container, _super, event) {
+                            // console.log('--- update');
+                            // console.log('item', $item);
+                            // console.log('container', container);
+
+                            $.post('ajax/search', {
+                                'test': 1
+                            }, function (data) {
+                                console.log(data);
+                            });
+                        }
+                    });
+            });
+            
 
             });
 		</script>
@@ -115,6 +134,7 @@
 			border-radius: 10px;
 			padding: 15px;
 			text-align: center;
+			font-family: sans-serif;
 		}
 		
 		.row_table:nth-of-type(1) {
@@ -127,8 +147,9 @@
 		}
 		
 		.f_btn_action {
-			 float: left;
-			 margin-right: 3px;
+			float: left;
+			margin-right: 3px;
+			color: white;
 		}
 		
 		.f_btn_action_block {
@@ -157,6 +178,7 @@
 			position: absolute;
 			opacity: 0.5;
 			z-index: 2000;
+			background: rgb(52, 69, 238);
 		}
 		
 		.ui-sortable-handle {
@@ -173,8 +195,9 @@
 			border-radius: 10px;
 		}
 		
-		.sortContainer.row_table .row.ui-sortable-handle.ui-sortable-helper{
-			background: rgb(112, 112, 112);
+		.sortContainer.row_table .row.ui-sortable-helper{
+			background: rgb(151, 151, 151);
+			border: 3px dashed #aaa;
 		}
 		
 		.ui-sortable-placeholder {
@@ -184,6 +207,12 @@
 			background: #ccc;
 		}
 		
+		i.icon-move{
+			border: 3px solid rgba(0, 0, 0, 0.54);
+			padding: 3px;
+			border-radius: 5px;
+			cursor: all-scroll;
+		}
 	</style>
 	
 	<h1>All Tasks</h1>
@@ -193,12 +222,12 @@
 	@endif
 	
 	<div class="row_table">
-			{{ Form::model($task, array(
-				'url'       => 'tasks/',
-				'class'     => 'pull-right',
-				'method'    => 'GET'
-			)) }}
-
+		{{ Form::model($task, array(
+			'url'       => 'ajax/search',
+			'class'     => 'pull-right',
+			'method'    => 'POST'
+		)) }}
+		
 			<div class="row align-items-center">
 				<div class="col-sm-1"></div>
 				<div class="col-sm-1">{{ Form::text('priority', Request::old('priority'), array('class' => 'form-control')) }}</div>
@@ -214,7 +243,7 @@
 		{{ Form::close() }}
 		<hr align="center"  size="2" color="#ffb5b5"/>
 		<div class="row">
-			<div class="col-sm-1">№</div>
+			<div class="col-sm-1"></div>
 			<div class="col-sm-1">priority</div>
 			<div class="col-sm-1">status</div>
 			<div class="col-sm-1">title</div>
@@ -227,7 +256,7 @@
 	<div class="sortContainer row_table">
 		@foreach($tasks as $key => $task)
 			<div class="row align-items-center">
-				<div class="col-sm-1">{{ ++$loop->index }}</div>
+				<div class="col-sm-1"><i class="icon-move">+</i></div>
 				<div class="col-sm-1">{{ $task->priority }}</div>
 				<div class="col-sm-1">{{ $task->status_id }}</div>
 				<div class="col-sm-1">{{ $task->title }}</div>
