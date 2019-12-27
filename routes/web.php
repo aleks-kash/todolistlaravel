@@ -24,19 +24,23 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/tasks/search/{priority?}/{status?}/{person?}', 'TasksController@search');
+//Route::get('/tasks/search/{priority?}/{status?}/{person?}', 'TasksController@search');
 
 Route::resource('tasks', 'TasksController');
 
 
 //Route::get('/tasks/seache', 'TasksController@show');
 
-Route::post('/ajax/search', function () {
-    return Response::json(Request::all());
-})
-    ->middleware('verified', 'only.ajax')
-//    ->middleware('only.ajax')
-;
+//Route::post('/ajax/search', function () {
+//    return Response::json(Request::all());
+//})
+////    ->middleware('verified', 'only.ajax')
+////    ->middleware('only.ajax')
+//    ->middleware('verified')
+//;
+
+Route::post('/ajax/search', 'Ajax\\AjaxController@search')->middleware('verified');
+
 //
 //Route::get('/tasks/{task}', function ($id) {
 ////    $task = DB::table('tasks')->find($id);

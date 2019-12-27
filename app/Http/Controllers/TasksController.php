@@ -37,7 +37,7 @@ class TasksController extends Controller
             $task->person = $person;
         }
 
-        $tasks = $taskQuery->orderBy('created_at')->paginate(2);
+        $tasks = $taskQuery->orderBy('created_at')->paginate(3);
 //dd($request->old('status'));
         if ($request->isMethod('post')) {
             dd($_POST);

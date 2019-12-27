@@ -24,6 +24,7 @@
                         scroll: false,
                         opacity: true,
                         handle: 'i.icon-move',
+                        //axis: 'y',
                         // group: 'sortContainer',
                         // pullPlaceholder: false,
                         // onDrop: function () {
@@ -111,7 +112,10 @@
                             // console.log('--- update');
                             // console.log('item', $item);
                             // console.log('container', container);
-
+                            //var data = $(this).sortable('serialize');
+                            console.log('this');
+                            console.log($(this).sortable( "toArray" ));
+                            console.log($(this).sortable( "serialize" ));
                             $.post('ajax/search', {
                                 'test': 1
                             }, function (data) {
@@ -255,7 +259,7 @@
 	</div>
 	<div class="sortContainer row_table">
 		@foreach($tasks as $key => $task)
-			<div class="row align-items-center">
+			<div class="row align-items-center" id='item_{{ $task->id }}' data-val="sdfg">
 				<div class="col-sm-1"><i class="icon-move">+</i></div>
 				<div class="col-sm-1">{{ $task->priority }}</div>
 				<div class="col-sm-1">{{ $task->status_id }}</div>
