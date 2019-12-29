@@ -9,8 +9,7 @@
 	@push('scripts')
 		<script type="text/javascript">
 
-            document.addEventListener('DOMContentLoaded', function(){ // Аналог $(document).ready(function(){
-                                                                      // Если должен быть найден один элемент
+            document.addEventListener('DOMContentLoaded', function(){
                 $(function() {
                     $.ajaxSetup({
                         headers: {
@@ -23,42 +22,9 @@
                         revert: true,
                         scroll: false,
                         opacity: true,
-                        handle: 'i.icon-move',
-                        // activate: function () {
-                        //     console.log('--- activate');
-                        // },
-                        // beforeStop: function () {
-                        //     console.log('--- beforeStop');
-                        // },
-                        // change: function () {
-                        //     console.log('--- change');
-                        // },
-                        // deactivate: function () {
-                        //     console.log('--- deactivate');
-                        // },
-                        // out: function () {
-                        //     console.log('--- out');
-                        // },
-                        // over: function () {
-                        //     console.log('--- over');
-                        // },
-                        // receive: function () {
-                        //     console.log('--- receive');
-                        // },
-                        // remove: function () {
-                        //     console.log('--- remove');
-                        // },
-                        // sort: function () {
-                        //     console.log('--- sort');
-                        // },
-                        // start: function () {
-                        //     console.log('--- start');
-                        // },
-                        // stop: function () {
-                        //     console.log('--- stop');
-                        // },
+                        // handle: 'i.icon-move',
+
                         update: function ($item, container, _super, event) {
-                            // console.log();
 
 	                        $($item.target.children).each(function (index) {
                                 if ($(this).data('position') != (index + 1)) {
@@ -68,22 +34,6 @@
                             });
                             
 	                        saveNewPositions();
-          
-                            // console.log('item', $item);
-                            // console.log('container', container);
-                            //var data = $(this).sortable('serialize');
-                            
-                            // console.log($(this).sortable( "toArray" ));
-                            // console.log($(this).sortable( "serialize" ));
-	                        /////////////////////////
-                            // console.log('this');
-                            // var sorted = $(this).sortable( "serialize", { key: "item" } );
-                            // sorted = $(this).sortable( "serialize" );
-                            // console.log(sorted);
-                            //
-                            // $.post('ajax/search', sorted, function (data) {
-                            //     console.log(data);
-                            // });
                         }
                     });
                     
@@ -233,7 +183,7 @@
 				<div class="col-sm-2">{{ $task->title }}</div>
 				<div class="col-sm-2">{{ Str::limit($task->body, 50, ' (...)') }}</div>
 				<div class="col-sm-2">{{ $task->responsible_person_id}}</div>
-				<div class="col-sm-1">{{ $task->updated_at }}</div>
+				<div class="col-sm-1">{{ (new DateTime($task->updated_at))->format('y-m-d H:i') }}</div>
 				<div class="col-sm-2">
 					<div class="f_btn_action_block">
 						<a class="btn btn-small btn-success f_btn_action" href="{{ URL::to('tasks/' . $task->id) }}">Show</a>
@@ -251,9 +201,5 @@
 			</div>
 		@endforeach
 	</div>
-	
-	{{--<div class="nav_paginator">--}}
-		{{--{{ $tasks->render() }}--}}
-	{{--</div>--}}
 
 @endsection
