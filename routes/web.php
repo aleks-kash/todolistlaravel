@@ -26,10 +26,10 @@ Route::get('/', function () {
 
 //Route::get('/tasks/search/{priority?}/{status?}/{person?}', 'TasksController@search');
 
+Route::post('/tasks/ajax/search', 'Ajax\\AjaxController@search');
+Route::get('/tasks/position', 'TasksController@position');
 Route::resource('tasks', 'TasksController');
 
-
-//Route::get('/tasks/seache', 'TasksController@show');
 
 //Route::post('/ajax/search', function () {
 //    return Response::json(Request::all());
@@ -39,7 +39,7 @@ Route::resource('tasks', 'TasksController');
 //    ->middleware('verified')
 //;
 
-Route::post('/ajax/search', 'Ajax\\AjaxController@search')->middleware('verified');
+
 
 //
 //Route::get('/tasks/{task}', function ($id) {

@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\{Validator, View, Session, Redirect};
 class TasksController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the tasks.
      *
      * @return Renderable
      */
@@ -37,15 +37,16 @@ class TasksController extends Controller
             $task->person = $person;
         }
 
-        $tasks = $taskQuery->orderBy('created_at')->paginate(3);
+        $tasks = $taskQuery->orderBy('position')->paginate(2);
+//        $tasks = $taskQuery->orderBy('created_at')->all();
 //dd($request->old('status'));
-        if ($request->isMethod('post')) {
-            dd($_POST);
-            $request->get('priority');
-            $request->get('status');
-            $request->get('person');
-            $tasks->appends(['sort' => 'votes']);
-        }
+//        if ($request->isMethod('post')) {
+//            dd($_POST);
+//            $request->get('priority');
+//            $request->get('status');
+//            $request->get('person');
+//            $tasks->appends(['sort' => 'votes']);
+//        }
 
         return View::make('tasks.index')
             ->with('tasks', $tasks)
@@ -53,7 +54,7 @@ class TasksController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new task.
      *
      * @return Renderable
      */
@@ -63,7 +64,7 @@ class TasksController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created task in storage.
      *
      * @param Request $request
      * @return RedirectResponse
@@ -76,9 +77,18 @@ class TasksController extends Controller
 //            'name'       => 'required',
 //            'email'      => 'required|email',
 //            'nerd_level' => 'required|numeric'
+//            'name' => 'required',
+//            'password' => 'required|min:8',
+//            'email' => 'required|email|unique'
+            'title'                 => '',
+            'body'                  => '',
+            'priority'              => '',
+            'status_id'             => '',
+            'responsible_person_id' => '',
         );
 
         $validator = Validator::make($request->all(), $rules);
+
 
         // process the login
         if ($validator->fails()) {
@@ -101,7 +111,7 @@ class TasksController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified task.
      *
      * @param  int  $id
      * @return Renderable
@@ -115,7 +125,7 @@ class TasksController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified task.
      *
      * @param  int  $id
      * @return Renderable
@@ -131,7 +141,7 @@ class TasksController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified task in storage.
      *
      * @param Request $request
      * @param string $id
@@ -171,7 +181,7 @@ class TasksController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified task from storage.
      *
      * @param  int  $id
      * @return RedirectResponse
@@ -197,5 +207,21 @@ class TasksController extends Controller
             $status
         ]);
         return Redirect::to('tasks');
+    }
+
+    /**
+     * @param Request $request
+     * @param Task $task
+     * @return Renderable
+     */
+    public function position(Request $request, Task $task): Renderable
+    {
+        $taskQuery = $task->newQuery();
+
+        $tasks = $taskQuery->orderBy('position')->get();
+
+        return View::make('tasks.position')
+            ->with('tasks', $tasks)
+            ->with('task', $task);
     }
 }
