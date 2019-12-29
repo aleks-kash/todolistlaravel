@@ -9,7 +9,8 @@ use Faker\Generator as Faker;
 $factory->define(Task::class, function (Faker $faker) {
     $title = $faker->sentence(rand(3, 8), true);
     $body = $faker->realText(rand(1000, 2000));
-    //$truncated = Str::limit($body, 20, ' (...)');
+    $createAt = $faker->dateTimeBetween('-3 months', 'now');
+
     return [
         'responsible_person_id' => rand(1, 3),
         'status_id'             => rand(1, 2),
@@ -17,5 +18,7 @@ $factory->define(Task::class, function (Faker $faker) {
         'slug'                  => Str::slug($title),
         'title'                 => $title,
         'body'                  => $body,
+        'created_at'             => $createAt,
+        'updated_at'             => $createAt,
     ];
 });

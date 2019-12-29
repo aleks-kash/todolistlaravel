@@ -71,7 +71,7 @@
 	</style>
 </head>
 <body>
-	<div class="container">
+	<div class="container-fluid">
 		
 		@yield('content')
 		
