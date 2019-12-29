@@ -70,12 +70,12 @@
 			position: absolute;
 		}
 		
-		.sortContainer.row_table .row{
+		.tasksContainer.row_table .row{
 			background: rgb(238, 238, 238);
 			border-radius: 10px;
 		}
 		
-		.sortContainer.row_table .row.ui-sortable-helper{
+		.tasksContainer.row_table .row.ui-sortable-helper{
 			background: rgb(151, 151, 151);
 			border: 3px dashed #aaa;
 		}
@@ -87,11 +87,14 @@
 			background: #ccc;
 		}
 		
+		.sortContainer i.icon-move{
+			cursor: all-scroll;
+		}
+		
 		i.icon-move{
 			border: 3px solid rgba(0, 0, 0, 0.54);
 			padding: 3px;
 			border-radius: 5px;
-			cursor: all-scroll;
 		}
 	</style>
 	
@@ -112,11 +115,11 @@
 				<div class="col-sm-1"></div>
 				<div class="col-sm-1">{{ Form::text('priority', Request::old('priority'), array('class' => 'form-control')) }}</div>
 				<div class="col-sm-1">{{ Form::text('status', Request::old('status'), array('class' => 'form-control')) }}</div>
-				<div class="col-sm-1"></div>
-				<div class="col-sm-1"></div>
-				<div class="col-sm-2">{{ Form::text('person', Request::old('person'), array('class' => 'form-control')) }}</div>
 				<div class="col-sm-2"></div>
-				<div class="col-sm-3">
+				<div class="col-sm-2"></div>
+				<div class="col-sm-2">{{ Form::text('person', Request::old('person'), array('class' => 'form-control')) }}</div>
+				<div class="col-sm-1"></div>
+				<div class="col-sm-2">
 					{{ Form::submit('Search', array('class' => 'btn btn-success')) }}
 				</div>
 			</div>
@@ -126,24 +129,24 @@
 			<div class="col-sm-1"></div>
 			<div class="col-sm-1">priority</div>
 			<div class="col-sm-1">status</div>
-			<div class="col-sm-1">title</div>
-			<div class="col-sm-1">body</div>
+			<div class="col-sm-2">title</div>
+			<div class="col-sm-2">body</div>
 			<div class="col-sm-2">Responsible Person</div>
-			<div class="col-sm-2">updated_at</div>
-			<div class="col-sm-3">actions</div>
+			<div class="col-sm-1">updated_at</div>
+			<div class="col-sm-2">actions</div>
 		</div>
 	</div>
-	<div class="sortContainer row_table">
+	<div class="tasksContainer row_table">
 		@foreach($tasks as $key => $task)
 			<div class="row align-items-center">
-				<div class="col-sm-1"><i class="icon-move">+</i></div>
+				<div class="col-sm-1"><i class="icon-move">{{ ++$key }}</i></div>
 				<div class="col-sm-1">{{ $task->priority }}</div>
 				<div class="col-sm-1">{{ $task->status_id }}</div>
-				<div class="col-sm-1">{{ $task->title }}</div>
-				<div class="col-sm-1">{{ $task->body }}</div>
+				<div class="col-sm-2">{{ $task->title }}</div>
+				<div class="col-sm-2">{{ Str::limit($task->body, 50, ' (...)') }}</div>
 				<div class="col-sm-2">{{ $task->responsible_person_id}}</div>
-				<div class="col-sm-2">{{ $task->updated_at }}</div>
-				<div class="col-sm-3">
+				<div class="col-sm-1">{{ $task->updated_at }}</div>
+				<div class="col-sm-2">
 					<div class="f_btn_action_block">
 						<a class="btn btn-small btn-success f_btn_action" href="{{ URL::to('tasks/' . $task->id) }}">Show</a>
 						<a class="btn btn-small btn-info f_btn_action" href="{{ URL::to('tasks/' . $task->id . '/edit') }}">Edit</a>
