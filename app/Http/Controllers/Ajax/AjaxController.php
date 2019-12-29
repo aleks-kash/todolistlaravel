@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Ajax;
 
 use App\Http\Controllers\Controller;
-use App\Task;
+use App\Models\Entities\Task;
 use Illuminate\Support\Facades\{Validator, View, Session, Redirect, Response};
 //use Illuminate\Http\RedirectResponse as Response;
 use Illuminate\Http\Request;

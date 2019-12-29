@@ -34,7 +34,7 @@ class CreateTasksTable extends Migration
                 ->on('users')
                 ->onDelete('set null');
             ;
-            $table->foreign('status_id')->references('id')->on('status');
+            $table->foreign('status_id')->references('id')->on('statuses');
 
             $table->index('responsible_person_id');
             $table->index('status_id');
