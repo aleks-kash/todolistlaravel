@@ -37,15 +37,9 @@ class TasksController extends Controller
         }
 
         $tasks = $taskQuery->orderBy('position')->paginate(2);
+
 //        $tasks = $taskQuery->orderBy('created_at')->all();
-//dd($request->old('status'));
-//        if ($request->isMethod('post')) {
-//            dd($_POST);
-//            $request->get('priority');
-//            $request->get('status');
-//            $request->get('person');
-//            $tasks->appends(['sort' => 'votes']);
-//        }
+//        $tasks->appends(['sort' => 'votes']);
 
         return View::make('tasks.index')
             ->with('tasks', $tasks)
@@ -148,12 +142,8 @@ class TasksController extends Controller
      */
     public function update(Request $request, $id): RedirectResponse
     {
-        // validate
-        // read more on validation at http://laravel.com/docs/validation
         $rules = array(
-//            'name'       => 'required',
-//            'email'      => 'required|email',
-//            'nerd_level' => 'required|numeric'
+
         );
 
         $validator = Validator::make($request->all(), $rules);
@@ -190,37 +180,5 @@ class TasksController extends Controller
         Task::find($id)->delete();
         Session::flash('message', 'Successfully deleted the task!');
         return Redirect::to('tasks');
-    }
-
-    /**
-     * @param string|null $priority
-     * @param string|null $person
-     * @param string|null $status
-     * @return RedirectResponse
-     */
-    public function search(string $priority = null, string $person = null, string $status = null): RedirectResponse
-    {
-        dd([
-            $priority,
-            $person,
-            $status
-        ]);
-        return Redirect::to('tasks');
-    }
-
-    /**
-     * @param Request $request
-     * @param Task $task
-     * @return Renderable
-     */
-    public function position(Request $request, Task $task): Renderable
-    {
-        $taskQuery = $task->newQuery();
-
-        $tasks = $taskQuery->orderBy('position')->get();
-
-        return View::make('tasks.position')
-            ->with('tasks', $tasks)
-            ->with('task', $task);
     }
 }
