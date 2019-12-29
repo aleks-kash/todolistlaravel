@@ -15,29 +15,56 @@ use Illuminate\Support\Facades\{Validator, View, Session, Redirect};
 class TasksController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the tasks.
      *
      * @return Renderable
      */
-    public function index()
+    public function index(Request $request, Task $task): Renderable
     {
-        $tasks = Task::all();
+        $taskQuery = $task->newQuery();
+        if ($priority = $request->get('priority')){
+            $taskQuery->byPriority($priority);
+            $task->priority = $priority;
+        }
+
+        if ($status = $request->get('status')){
+            $taskQuery->byStatus($status);
+            $task->status = $status;
+        }
+
+        if ($person = $request->get('person')){
+            $taskQuery->byPerson($person);
+            $task->person = $person;
+        }
+
+        $tasks = $taskQuery->orderBy('position')->paginate(2);
+//        $tasks = $taskQuery->orderBy('created_at')->all();
+//dd($request->old('status'));
+//        if ($request->isMethod('post')) {
+//            dd($_POST);
+//            $request->get('priority');
+//            $request->get('status');
+//            $request->get('person');
+//            $tasks->appends(['sort' => 'votes']);
+//        }
+
         return View::make('tasks.index')
-            ->with('tasks', $tasks);
+            ->with('tasks', $tasks)
+            ->with('task', $task);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new task.
      *
      * @return Renderable
      */
-    public function create()
+    public function create(): Renderable
     {
         return View::make('tasks.create');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created task in storage.
      *
      * @param Request $request
      * @return RedirectResponse
@@ -50,9 +77,18 @@ class TasksController extends Controller
 //            'name'       => 'required',
 //            'email'      => 'required|email',
 //            'nerd_level' => 'required|numeric'
+//            'name' => 'required',
+//            'password' => 'required|min:8',
+//            'email' => 'required|email|unique'
+            'title'                 => '',
+            'body'                  => '',
+            'priority'              => '',
+            'status_id'             => '',
+            'responsible_person_id' => '',
         );
 
         $validator = Validator::make($request->all(), $rules);
+
 
         // process the login
         if ($validator->fails()) {
@@ -75,12 +111,12 @@ class TasksController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified task.
      *
      * @param  int  $id
      * @return Renderable
      */
-    public function show($id)
+    public function show($id): Renderable
     {
         $task = Task::find($id);
 
@@ -89,12 +125,12 @@ class TasksController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified task.
      *
      * @param  int  $id
      * @return Renderable
      */
-    public function edit($id)
+    public function edit($id): Renderable
     {
         // get the nerd
         $task = Task::find($id);
@@ -105,7 +141,7 @@ class TasksController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified task in storage.
      *
      * @param Request $request
      * @param string $id
@@ -145,15 +181,47 @@ class TasksController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified task from storage.
      *
      * @param  int  $id
      * @return RedirectResponse
      */
-    public function destroy($id)
+    public function destroy($id): RedirectResponse
     {
         Task::find($id)->delete();
         Session::flash('message', 'Successfully deleted the task!');
         return Redirect::to('tasks');
+    }
+
+    /**
+     * @param string|null $priority
+     * @param string|null $person
+     * @param string|null $status
+     * @return RedirectResponse
+     */
+    public function search(string $priority = null, string $person = null, string $status = null): RedirectResponse
+    {
+        dd([
+            $priority,
+            $person,
+            $status
+        ]);
+        return Redirect::to('tasks');
+    }
+
+    /**
+     * @param Request $request
+     * @param Task $task
+     * @return Renderable
+     */
+    public function position(Request $request, Task $task): Renderable
+    {
+        $taskQuery = $task->newQuery();
+
+        $tasks = $taskQuery->orderBy('position')->get();
+
+        return View::make('tasks.position')
+            ->with('tasks', $tasks)
+            ->with('task', $task);
     }
 }

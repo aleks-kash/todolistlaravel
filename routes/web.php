@@ -16,22 +16,31 @@ use Illuminate\Support\Facades\{
     DB,
     Auth,
     Route,
+    Request,
+    Response,
 };
 
 Route::get('/', function () {
     return view('welcome');
 });
 
+//Route::get('/tasks/search/{priority?}/{status?}/{person?}', 'TasksController@search');
+
+Route::post('/tasks/ajax/search', 'Ajax\\AjaxController@search');
+Route::get('/tasks/position', 'TasksController@position');
 Route::resource('tasks', 'TasksController');
 
-//Route::get('/tasks', 'TasksController@index');
-//Route::get('/tasks/{task}', 'TasksController@show');
 
-//Route::get('/tasks', function () {
-////    $tasks = DB::table('tasks')->get();
-//    $tasks = Task::all();
-//    return view('tasks.index', compact('tasks'));
-//});
+//Route::post('/ajax/search', function () {
+//    return Response::json(Request::all());
+//})
+////    ->middleware('verified', 'only.ajax')
+////    ->middleware('only.ajax')
+//    ->middleware('verified')
+//;
+
+
+
 //
 //Route::get('/tasks/{task}', function ($id) {
 ////    $task = DB::table('tasks')->find($id);

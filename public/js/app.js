@@ -54375,7 +54375,6 @@ var app = new Vue({
 
 global.jQuery = jquery__WEBPACK_IMPORTED_MODULE_2___default.a;
 global.$ = jquery__WEBPACK_IMPORTED_MODULE_2___default.a;
-console.log(jquery__WEBPACK_IMPORTED_MODULE_2___default()('<p></p>'));
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../node_modules/webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
 
 /***/ }),
