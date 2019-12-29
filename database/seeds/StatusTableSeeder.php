@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Models\Entities\Status;
+use Illuminate\Support\Facades\DB;
 
 class StatusTableSeeder extends Seeder
 {
@@ -11,8 +13,9 @@ class StatusTableSeeder extends Seeder
      */
     public function run()
     {
-        $statuses = [];
-
-
+        DB::table('statuses')->insert([
+            ['id' => Status::IN_PROGRESS, 'name' => 'IN_PROGRESS'],
+            ['id' => Status::DONE, 'name' => 'DONE'],
+        ]);
     }
 }

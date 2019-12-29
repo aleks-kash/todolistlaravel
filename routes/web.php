@@ -11,7 +11,7 @@
 |
 */
 
-use App\Task;
+use App\Models\Entities\Task;
 use Illuminate\Support\Facades\{
     DB,
     Auth,

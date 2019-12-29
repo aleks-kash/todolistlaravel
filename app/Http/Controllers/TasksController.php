@@ -1,8 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\{
+use App\Models\Entities\{
     User,
     Task,
     Status
