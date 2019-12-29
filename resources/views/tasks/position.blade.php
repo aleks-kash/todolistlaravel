@@ -227,7 +227,7 @@
 	<div class="sortContainer row_table">
 		@foreach($tasks as $key => $task)
 			<div class="row align-items-center" data-index="{{ $task->id }}" data-position="{{ $task->position }}">
-				<div class="col-sm-1"><i class="icon-move">{{ $task->position }}</i></div>
+				<div class="col-sm-1"><i class="icon-move">{{ ++$key }}</i></div>
 				<div class="col-sm-1">{{ $task->priority }}</div>
 				<div class="col-sm-1">{{ $task->status_id }}</div>
 				<div class="col-sm-1">{{ $task->title }}</div>
