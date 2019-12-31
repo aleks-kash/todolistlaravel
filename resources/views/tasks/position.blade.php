@@ -48,7 +48,7 @@
 		                    $(this).removeClass('updated');
                         });
 
-                        $.post('ajax/search', {
+                        $.post('{{ URL::route('updateTasksPosition') }}', {
                             update: 1,
 	                        positions: positions
                         }, function (response) {

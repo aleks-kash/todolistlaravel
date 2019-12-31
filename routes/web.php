@@ -20,16 +20,18 @@ use Illuminate\Support\Facades\{
     Response,
 };
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
 
 //Route::get('/tasks/search/{priority?}/{status?}/{person?}', 'TasksController@search');
+
+Route::get('/', 'TasksController@index');
 
 Route::group(['prefix' => 'tasks', 'middleware' => 'auth'], function () {
 
     Route::group(['namespace' => 'Ajax', 'prefix' => 'ajax'], function () {
-        Route::post('/search', 'AjaxController@search');
+        Route::post('/update/positions', 'TasksController@updatePositions')->name('updateTasksPosition');
     });
 
     Route::get('/position', 'TasksController@position');
@@ -60,5 +62,5 @@ Route::group(['prefix' => 'tasks', 'middleware' => 'auth'], function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/site', 'SiteController@index')->name('site');
 
