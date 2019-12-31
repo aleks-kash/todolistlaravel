@@ -101,7 +101,7 @@
 	<h1>All Tasks</h1>
 	
 	@if (Session::has('message'))
-		<div class="alert alert-info">{{ Session::get('message') }}</div>
+		<p class="alert alert-info">{{ Session::get('message') }}</p>
 	@endif
 	
 	<div class="row_table">
