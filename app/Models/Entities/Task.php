@@ -2,13 +2,12 @@
 
 namespace App\Models\Entities;
 
-use Illuminate\Database\Eloquent\{
-    Builder,
-    Model
-};
+use Illuminate\Database\Eloquent\{Builder, Model, SoftDeletes};
 
 class Task extends Model
 {
+    use SoftDeletes;
+
     public function scopeByPriority(Builder $query, $priority): Builder
     {
         return $query->where('priority', '=', $priority);

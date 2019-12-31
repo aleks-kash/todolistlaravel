@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('auth._layout')
 
 @section('content')
 <div class="container">
@@ -22,6 +22,7 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
+                                
                             </div>
                         </div>
 

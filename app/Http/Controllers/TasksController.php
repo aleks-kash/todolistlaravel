@@ -11,7 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\{Validator, View, Session, Redirect};
 
-class TasksController extends Controller
+class TasksController extends BaseController
 {
     /**
      * Display a listing of the tasks.

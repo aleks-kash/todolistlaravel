@@ -10,19 +10,21 @@
 	
 	<!-- Fonts -->
 	<link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-@if (config('app.env') == 'local')
-	<link rel="stylesheet" href="{{asset('css/app.css')}}">
-@else
-	<link rel="stylesheet" href="{{asset(mix('css/app.css'), true)}}">
-@endif
+	<link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
 	
 	<!-- Styles -->
+	@if (config('app.env') == 'local')
+		<link rel="stylesheet" href="{{asset('css/app.css')}}">
+	@else
+		<link rel="stylesheet" href="{{asset(mix('css/app.css'), true)}}">
+	@endif
 	<style>
 		html, body {
-			background-color: #fff;
-			color: #636b6f;
+			/*background-color: #fff;*/
+			/*color: #636b6f;*/
 			font-family: 'Nunito', sans-serif;
-			font-weight: 200;
+			/*font-weight: 200;*/
 			height: 100vh;
 			margin: 0;
 		}
@@ -71,11 +73,12 @@
 	</style>
 </head>
 <body>
-	<div class="container-fluid">
-		
-		@yield('content')
-		
-	</div>
+
+	<!-- navbar -->
+	@yield('navbar')
+	
+	<!-- content -->
+	@yield('contents')
 	
 	<!-- Scripts -->
 	@if (config('app.env') == 'local')
