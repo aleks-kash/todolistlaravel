@@ -181,4 +181,21 @@ class TasksController extends Controller
         Session::flash('message', 'Successfully deleted the task!');
         return Redirect::to('tasks');
     }
+
+    /**
+     * @param Request $request
+     * @param Task $task
+     * @return Renderable
+     */
+    public function position(Request $request, Task $task): Renderable
+    {
+        $taskQuery = $task->newQuery();
+
+        $tasks = $taskQuery->orderBy('position')->get();
+
+        return View::make('tasks.position')
+            ->with('tasks', $tasks)
+            ->with('task', $task);
+    }
+
 }
