@@ -26,9 +26,18 @@ Route::get('/', function () {
 
 //Route::get('/tasks/search/{priority?}/{status?}/{person?}', 'TasksController@search');
 
-Route::post('/tasks/ajax/search', 'Ajax\\AjaxController@search');
-Route::get('/tasks/position', 'TasksController@position');
-Route::resource('tasks', 'TasksController');
+Route::group(['prefix' => 'tasks', 'middleware' => 'auth'], function () {
+
+    Route::group(['namespace' => 'Ajax', 'prefix' => 'ajax'], function () {
+        Route::post('/search', 'AjaxController@search');
+    });
+
+    Route::get('/position', 'TasksController@position');
+    Route::resource('/', 'TasksController');
+
+});
+
+
 
 
 //Route::post('/ajax/search', function () {

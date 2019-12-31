@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 
-class AjaxController extends Controller
+class AjaxController extends BaseController
 {
     /**
      * Create a new controller instance.
@@ -16,7 +16,7 @@ class AjaxController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth', 'verified', 'only.ajax']);
+        parent::__construct(['verified', 'only.ajax']);
     }
 
     public function search(Request $request)

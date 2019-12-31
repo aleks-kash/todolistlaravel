@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\{Validator, View, Session, Redirect};
 
 class SiteContriller extends Controller
 {
@@ -19,10 +21,11 @@ class SiteContriller extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return RedirectResponse
      */
     public function index()
     {
-        return view('home');
+        Session::flash('message', 'You are logged in!');
+        return Redirect::to('tasks');
     }
 }
