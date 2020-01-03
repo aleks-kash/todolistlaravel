@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Http\Requests\TaskUpdateRequest;
+use App\Http\Requests\TaskCreateRequest;
 use App\Http\Requests\TasksUpdateRequest;
 use App\Models\Entities\{
     User,
@@ -62,48 +63,16 @@ class TasksController extends BaseController
     /**
      * Store a newly created task in storage.
      *
-     * @param Request $request
+     * @param TaskCreateRequest $request
+     * @param Task $task
      * @return RedirectResponse
      */
-    public function store(Request $request): RedirectResponse
+    public function store(TaskCreateRequest $request, Task $task): RedirectResponse
     {
-        // validate
-        // read more on validation at http://laravel.com/docs/validation
-        $rules = array(
-//            'name'       => 'required',
-//            'email'      => 'required|email',
-//            'nerd_level' => 'required|numeric'
-//            'name' => 'required',
-//            'password' => 'required|min:8',
-//            'email' => 'required|email|unique'
-            'title'                 => '',
-            'body'                  => '',
-            'priority'              => '',
-            'status_id'             => '',
-            'responsible_person_id' => '',
-        );
+        Session::flash('message', 'Successfully created task!');
+        $task = $task->create($request->all());
 
-        $validator = Validator::make($request->all(), $rules);
-
-
-        // process the login
-        if ($validator->fails()) {
-            return Redirect::to('tasks/create')
-                ->withErrors($validator)
-                ->withInput($request->except('password'));
-        } else {
-
-            $task = new Task;
-            $task->title    = $request->get('title');
-            $task->body     = $request->get('body');
-            $task->priority = $request->get('priority');
-            $task->status_id = $request->get('status_id');
-            $task->responsible_person_id = $request->get('responsible_person_id');
-            $task->save();
-
-            Session::flash('message', 'Successfully created task!');
-            return Redirect::to('tasks');
-        }
+        return Redirect::to(URL::route('tasks.edit', [$task->id]));
     }
 
     /**
@@ -144,10 +113,7 @@ class TasksController extends BaseController
         Session::flash('message', 'Successfully updated task!');
         $result = $task->update($request->all());
 
-        return back()
-            ->withErrors($request->getValidator())
-            ->withInput()
-        ;
+        return Redirect::route('tasks.edit',[$task->id]);
     }
 
     /**

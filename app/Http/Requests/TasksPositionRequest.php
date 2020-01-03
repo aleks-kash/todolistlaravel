@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Url;
 
-class TasksUpdateRequest extends FormRequest
+class TasksPositionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -38,4 +38,5 @@ class TasksUpdateRequest extends FormRequest
             'status_id'             => 'bail|required|integer|exists:statuses,id',
         ];
     }
+
 }

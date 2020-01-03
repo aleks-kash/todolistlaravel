@@ -22,7 +22,7 @@ class CreateTasksTable extends Migration
             $table->integer('priority');
             $table->integer('position')->default(0);
 
-            $table->string('slug')->unique();
+            $table->string('slug')->unique()->nullable();
             $table->string('title');
             $table->text('body')->nullable();
 
