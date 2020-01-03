@@ -9,6 +9,8 @@ services:
 #    image: nginx
     volumes:
       - ./docker.config/nginx/nginx.conf:/etc/nginx/conf.d/defaulf.conf
+      - ./docker.config/nginx/access.log:/var/log/access.log
+      - ./docker.config/nginx/error.log:/var/log/error.log
       - ./public/:${APP_PATH_CONTAINER}public/
     working_dir: ${APP_PATH_CONTAINER}
     ports:

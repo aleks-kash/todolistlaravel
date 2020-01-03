@@ -2,11 +2,33 @@
 
 namespace App\Models\Entities;
 
+use Collective\Html\Eloquent\FormAccessible;
 use Illuminate\Database\Eloquent\{Builder, Model, SoftDeletes};
 
 class Task extends Model
 {
-    use SoftDeletes;
+    use FormAccessible, SoftDeletes;
+    /**
+     * Whether the model should throw a ValidationException if it
+     * fails validation. If not set, it will default to false.
+     *
+     * @var boolean
+     */
+    protected $throwValidationExceptions = true;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'title',
+        'slug',
+        'body',
+        'priority',
+        'responsible_person_id',
+        'status_id',
+    ];
 
     public function scopeByPriority(Builder $query, $priority): Builder
     {

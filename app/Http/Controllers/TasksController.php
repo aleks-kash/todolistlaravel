@@ -1,15 +1,21 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Requests\TaskUpdateRequest;
+use App\Http\Requests\TasksUpdateRequest;
 use App\Models\Entities\{
     User,
     Task,
     Status
 };
+use Collective\Html\FormBuilder;
+use Collective\Html\FormFacade;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\{Validator, View, Session, Redirect};
+use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Url;
 
 class TasksController extends BaseController
 {
@@ -36,10 +42,7 @@ class TasksController extends BaseController
             $task->person = $person;
         }
 
-        $tasks = $taskQuery->orderBy('position')->paginate(2);
-
-//        $tasks = $taskQuery->orderBy('created_at')->all();
-//        $tasks->appends(['sort' => 'votes']);
+        $tasks = $taskQuery->orderBy('position')->paginate(5);
 
         return View::make('tasks.index')
             ->with('tasks', $tasks)
@@ -106,67 +109,45 @@ class TasksController extends BaseController
     /**
      * Display the specified task.
      *
-     * @param  int  $id
+     * @param Task $task
      * @return Renderable
      */
-    public function show($id): Renderable
+    public function show(Task $task): Renderable
     {
-        $task = Task::find($id);
-
         return View::make('tasks.show')
-            ->with('task', $task);
+            ->with('task', $task)
+        ;
     }
 
     /**
      * Show the form for editing the specified task.
      *
-     * @param  int  $id
+     * @param Task $task
      * @return Renderable
      */
-    public function edit($id): Renderable
+    public function edit(Task $task): Renderable
     {
-        // get the nerd
-        $task = Task::find($id);
-
-        // show the edit form and pass the nerd
         return View::make('tasks.edit')
-            ->with('task', $task);
+            ->with('task', $task)
+        ;
     }
 
     /**
      * Update the specified task in storage.
      *
-     * @param Request $request
-     * @param string $id
-     * @return RedirectResponse
+     * @param TasksUpdateRequest $request
+     * @param Task $task
+     * @ return RedirectResponse
      */
-    public function update(Request $request, $id): RedirectResponse
+    public function update(TaskUpdateRequest $request, Task $task)
     {
-        $rules = array(
+        Session::flash('message', 'Successfully updated task!');
+        $result = $task->update($request->all());
 
-        );
-
-        $validator = Validator::make($request->all(), $rules);
-
-        // process the login
-        if ($validator->fails()) {
-            return Redirect::to('tasks/' . $id . '/edit')
-                ->withErrors($validator)
-                ->withInput($request->except('password'));
-        } else {
-            // store
-            $task = Task::find($id);
-            $task->title    = $request->get('title');
-            $task->body     = $request->get('body');
-            $task->priority = $request->get('priority');
-            $task->status_id = $request->get('status_id');
-            $task->responsible_person_id = $request->get('responsible_person_id');
-            $task->save();
-
-            // redirect
-            Session::flash('message', 'Successfully updated nerd!');
-            return Redirect::to('tasks');
-        }
+        return back()
+            ->withErrors($request->getValidator())
+            ->withInput()
+        ;
     }
 
     /**
