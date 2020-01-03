@@ -8,7 +8,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Task::class, function (Faker $faker) {
     $title = $faker->sentence(rand(3, 8), true);
-    $body = $faker->realText(rand(1000, 2000));
+    $body = $faker->realText(rand(50, 500));
     $createAt = $faker->dateTimeBetween('-3 months', 'now');
 
     return [
