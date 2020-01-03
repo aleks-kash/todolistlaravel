@@ -30,7 +30,7 @@ class TaskCreateRequest extends FormRequest
         return [
             'title'                 => 'bail|required|min:5|max:200',
             'slug'                  => 'bail|max:200',
-            'body'                  => 'bail|string|between:3,1009',
+            'body'                  => 'bail|string|between:3,500',
             'priority'              => 'bail|required|integer',
             'responsible_person_id' => 'bail|required|integer|exists:users,id',
             'status_id'             => 'bail|required|integer|exists:statuses,id',

@@ -113,7 +113,7 @@ class TasksController extends BaseController
         Session::flash('message', 'Successfully updated task!');
         $result = $task->update($request->all());
 
-        return Redirect::route('tasks.edit',[$task->id]);
+        return Redirect::to(URL::route('tasks.edit', [$task->id]));
     }
 
     /**
