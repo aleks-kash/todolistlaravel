@@ -54,11 +54,6 @@
                         }, function (response) {
                             console.log(response);
                         });
-	                    
-	                    // $.ajax({
-		                //     url: '',
-		                //     method
-	                    // });
                     }
             });
             
