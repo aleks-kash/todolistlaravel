@@ -52,6 +52,8 @@
      Generate api key:
     
      > php artisan key:generate
+     
+     Application key set successfully.
 </li>
 
 
@@ -64,6 +66,7 @@
      Run migrate and seeds:
         
      > php artisan migrate --seed
+    
 </li>
 
 
@@ -71,6 +74,8 @@
      Run artisan server:
      
      > php artisan serve
+     
+     Laravel development server started: http://127.0.0.1:8000
 </li>
 
 </ol>
