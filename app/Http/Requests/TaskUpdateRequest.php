@@ -14,11 +14,6 @@ class TaskUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        $this->redirect = URL::route('tasks.edit', [
-            $this->route()->parameter('task')->id
-        ]);
-        $this->errorBag = 'default';
-
         return true;
     }
 
@@ -39,4 +34,19 @@ class TaskUpdateRequest extends FormRequest
         ];
     }
 
+    /**
+     * Get the URL to redirect to on a validation error.
+     *
+     * @return string
+     */
+    protected function getRedirectUrl()
+    {
+        $url = $this->redirector->getUrlGenerator();
+
+        $parameters = [
+            $this->route()->parameter('task')->id
+        ];
+
+        return $url->route('admin.posts.edit', $parameters);
+    }
 }

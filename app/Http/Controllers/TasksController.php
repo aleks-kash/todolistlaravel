@@ -1,25 +1,38 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Http\Requests\TaskUpdateRequest;
-use App\Http\Requests\TaskCreateRequest;
-use App\Http\Requests\TasksUpdateRequest;
+
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Validation\ValidationException;
+use App\Http\Requests\{
+    TaskCreateRequest,
+    TaskUpdateRequest,
+    TasksUpdateRequest,
+};
 use App\Models\Entities\{
     User,
     Task,
     Status
 };
-use Collective\Html\FormBuilder;
-use Collective\Html\FormFacade;
-use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\{Validator, View, Session, Redirect};
-use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Facades\Url;
+use Collective\Html\{
+    FormBuilder,
+    FormFacade,
+};
+use Illuminate\Http\{
+    Request,
+    RedirectResponse,
+};
+use Illuminate\Support\Facades\{
+    Url,
+    View,
+    Session,
+    Redirect,
+    Validator,
+};
 
 class TasksController extends BaseController
 {
+
     /**
      * Display a listing of the tasks.
      *
@@ -83,6 +96,7 @@ class TasksController extends BaseController
      */
     public function show(Task $task): Renderable
     {
+        dd($task->user->name);
         return View::make('tasks.show')
             ->with('task', $task)
         ;
