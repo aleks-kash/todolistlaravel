@@ -1,53 +1,52 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Http\Requests\TaskUpdateRequest;
-use App\Http\Requests\TaskCreateRequest;
-use App\Http\Requests\TasksUpdateRequest;
+
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Validation\ValidationException;
+use App\Repositories\TasksRepository;
+use App\Http\Requests\{TaskCreateRequest, TasksFilterRequest, TaskUpdateRequest, TasksUpdateRequest};
 use App\Models\Entities\{
     User,
     Task,
     Status
 };
-use Collective\Html\FormBuilder;
-use Collective\Html\FormFacade;
-use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\{Validator, View, Session, Redirect};
-use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Facades\Url;
+use Collective\Html\{
+    FormBuilder,
+    FormFacade,
+};
+use Illuminate\Http\{
+    Request,
+    RedirectResponse,
+};
+use Illuminate\Support\Facades\{
+    Url,
+    View,
+    Session,
+    Redirect,
+    Validator,
+};
 
 class TasksController extends BaseController
 {
+
     /**
      * Display a listing of the tasks.
      *
      * @return Renderable
      */
-    public function index(Request $request, Task $task): Renderable
+    public function index(TasksFilterRequest $request, Task $task, TasksRepository $tasksRepository): Renderable
     {
-        $taskQuery = $task->newQuery();
-        if ($priority = $request->get('priority')){
-            $taskQuery->byPriority($priority);
-            $task->priority = $priority;
+        $rowStart = 0;
+        if (($page = $request->get('page')) > 1) {
+            $rowStart = ($page - 1) * ($request->get('perPage') ?? $task->getPerPage());
         }
-
-        if ($status = $request->get('status')){
-            $taskQuery->byStatus($status);
-            $task->status = $status;
-        }
-
-        if ($person = $request->get('person')){
-            $taskQuery->byPerson($person);
-            $task->person = $person;
-        }
-
-        $tasks = $taskQuery->orderBy('position')->paginate(5);
 
         return View::make('tasks.index')
-            ->with('tasks', $tasks)
-            ->with('task', $task);
+            ->with('tasks', $tasksRepository->getForFilter($request))
+            ->with('taskModel', $task)
+            ->with('rowStart', $rowStart)
+        ;
     }
 
     /**
@@ -57,7 +56,13 @@ class TasksController extends BaseController
      */
     public function create(): Renderable
     {
-        return View::make('tasks.create');
+        $statuses = Status::all()->pluck('name', 'id')->put(0, '---')->sortKeys();
+        $users = User::all()->pluck('name', 'id')->put(0, '---')->sortKeys();
+
+        return View::make('tasks.create')
+            ->with('statuses', $statuses)
+            ->with('users', $users)
+        ;
     }
 
     /**
@@ -96,7 +101,12 @@ class TasksController extends BaseController
      */
     public function edit(Task $task): Renderable
     {
+        $statuses = Status::all()->pluck('name', 'id')->put(0, '---')->sortKeys();
+        $users = User::all()->pluck('name', 'id')->put(0, '---')->sortKeys();
+
         return View::make('tasks.edit')
+            ->with('statuses', $statuses)
+            ->with('users', $users)
             ->with('task', $task)
         ;
     }

@@ -18,6 +18,11 @@ use Illuminate\Support\Facades\{
 
 Route::get('/', 'TasksController@index');
 
+
+//    ->only($methods)
+//    ->except($methods)
+
+
 Route::group(['prefix' => 'tasks', 'middleware' => 'auth'], function () {
 
     Route::group(['namespace' => 'Ajax', 'prefix' => 'ajax'], function () {

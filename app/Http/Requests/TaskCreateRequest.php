@@ -8,15 +8,19 @@ use Illuminate\Support\Facades\Url;
 class TaskCreateRequest extends FormRequest
 {
     /**
+     * The URI to redirect to if validation fails.
+     *
+     * @var string
+     */
+    protected $redirectRoute = 'tasks.create';
+
+    /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
     public function authorize()
     {
-        $this->redirect = URL::route('tasks.create');
-        $this->errorBag = 'default';
-
         return true;
     }
 
