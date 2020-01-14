@@ -18,6 +18,13 @@ class Task extends Model
     protected $throwValidationExceptions = true;
 
     /**
+     * The number of models to return for pagination.
+     *
+     * @var int
+     */
+    protected $perPage = 3;
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -46,6 +53,11 @@ class Task extends Model
         return $query->where('responsible_person_id', '=', $person);
     }
 
+    public function scopeByPositionOrder(Builder $query, $position): Builder
+    {
+        return $query->orderBy('position');
+    }
+
     /**
      * Task status
      *
@@ -63,6 +75,6 @@ class Task extends Model
      */
     public function responsiblePerson(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'responsible_person_id');
     }
 }

@@ -47,6 +47,6 @@ class TaskUpdateRequest extends FormRequest
             $this->route()->parameter('task')->id
         ];
 
-        return $url->route('admin.posts.edit', $parameters);
+        return $url->route('tasks.edit', $parameters);
     }
 }
